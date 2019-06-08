@@ -449,6 +449,20 @@ if test "x${request_libcares}" = "xyes" &&
   AC_MSG_ERROR([libcares was requested (--with-libcares) but not found])
 fi
 
+# ngtcp2 (for src)
+PKG_CHECK_MODULES([LIBNGTCP2], [libngtcp2 >= 0.0.0], [have_libngtcp2=yes],
+                  [have_libngtcp2=no])
+if test "x${have_libngtcp2}" = "xno"; then
+  AC_MSG_NOTICE($LIBNGTCP2_PKG_ERRORS)
+fi
+
+# nghttp3 (for src)
+PKG_CHECK_MODULES([LIBNGHTTP3], [libnghttp3 >= 0.0.0], [have_libnghttp3=yes],
+                  [have_libnghttp3=no])
+if test "x${have_libnghttp3}" = "xno"; then
+  AC_MSG_NOTICE($LIBNGHTTP3_PKT_ERRORS)
+fi
+
 # libevent_openssl (for examples)
 # 2.0.8 is required because we use evconnlistener_set_error_cb()
 have_libevent_openssl=no
@@ -1007,6 +1021,8 @@ AC_MSG_NOTICE([summary of build options:
       Libxml2:        ${have_libxml2} (CFLAGS='${LIBXML2_CFLAGS}' LIBS='${LIBXML2_LIBS}')
       Libev:          ${have_libev} (CFLAGS='${LIBEV_CFLAGS}' LIBS='${LIBEV_LIBS}')
       Libc-ares:      ${have_libcares} (CFLAGS='${LIBCARES_CFLAGS}' LIBS='${LIBCARES_LIBS}')
+      libngtcp2:      ${have_libngtcp2} (CFLAGS='${LIBNGTCP2_CFLAGS}' LIBS='${LIBNGTCP2_LIBS}')
+      libnghttp3:     ${have_libnghttp3} (CFLAGS='${LIBNGHTTP3_CFLAGS}' LIBS='${LIBNGHTTP3_LIBS}')
       Libevent(SSL):  ${have_libevent_openssl} (CFLAGS='${LIBEVENT_OPENSSL_CFLAGS}' LIBS='${LIBEVENT_OPENSSL_LIBS}')
       Jansson:        ${have_jansson} (CFLAGS='${JANSSON_CFLAGS}' LIBS='${JANSSON_LIBS}')
       Jemalloc:       ${have_jemalloc} (LIBS='${JEMALLOC_LIBS}')
