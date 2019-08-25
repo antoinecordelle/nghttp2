@@ -2249,6 +2249,8 @@ Options:
 }
 } // namespace
 
+extern ngtcp2_crypto_ctx in_crypto_ctx;
+
 int main(int argc, char **argv) {
   tls::libssl_init();
 
@@ -2905,6 +2907,8 @@ int main(int argc, char **argv) {
               << " should be prohibited." << std::endl;
     exit(EXIT_FAILURE);
   }
+
+  ngtcp2_crypto_ctx_initial(&in_crypto_ctx);
 
   resolve_host();
 
