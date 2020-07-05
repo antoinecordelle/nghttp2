@@ -837,7 +837,9 @@ void Client::terminate_session() {
   if (config.is_quic()) {
     quic.close_requested = true;
   }
-  session->terminate();
+  if (session) {
+    session->terminate();
+  }
   // http1 session needs writecb to tear down session.
   signal_write();
 }
@@ -1495,7 +1497,7 @@ Worker::~Worker() {
 
 void Worker::stop_all_clients() {
   for (auto client : clients) {
-    if (client && client->session) {
+    if (client) {
       client->terminate_session();
     }
   }
